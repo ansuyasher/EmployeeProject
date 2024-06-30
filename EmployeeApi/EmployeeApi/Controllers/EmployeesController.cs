@@ -1,4 +1,4 @@
-﻿using EmployeeApi.Data;
+using EmployeeApi.Data;
 using EmployeeApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,36 +27,36 @@ namespace EmployeeApi.Controllers
             var supervisors = await _context.Supervisors.Include(s => s.Person).ToListAsync();
             var managers = await _context.Managers.Include(m => m.Person).ToListAsync();
 
-            //var allEmployees = employees.Select(e => new
-            //{
-            //    Type = "Employee",
-            //    e.EmployeeID,
-            //    e.Person.FirstName,
-            //    e.Person.LastName,
-            //    e.Person.Address1,
-            //    e.PayPerHour
-            //})
-            //.Union(supervisors.Select(s => new
-            //{
-            //    Type = "Supervisor",
-            //    s.SupervisorID,
-            //    FirstName = s.Person?.FirstName,
-            //    LastName = s.Person?.LastName,
-            //    Address1 = s.Person?.Address1,
-            //    AnnualSalary = s.AnnualSalary
-            //}))
-            //.Union(managers.Select(m => new
-            //{
-            //    Type = "Manager",
-            //    m.ManagerID,
-            //    FirstName = m.Person?.FirstName,
-            //    LastName = m.Person?.LastName,
-            //    Address1 = m.Person?.Address1,
-            //    AnnualSalary = m.AnnualSalary,
-            //    m.MaxExpenseAmount
-            //}));
+            var allEmployees = employees.Select(e => new
+            {
+                Type = "Employee",
+                e.EmployeeID,
+                e.Person.FirstName,
+                e.Person.LastName,
+                e.Person.Address1,
+                e.PayPerHour
+            })
+            .Union(supervisors.Select(s => new
+            {
+                Type = "Supervisor",
+                s.SupervisorID,
+                FirstName = s.Person?.FirstName,
+                LastName = s.Person?.LastName,
+                Address1 = s.Person?.Address1,
+                AnnualSalary = s.AnnualSalary
+            }))
+            .Union(managers.Select(m => new
+            {
+                Type = "Manager",
+                m.ManagerID,
+                FirstName = m.Person?.FirstName,
+                LastName = m.Person?.LastName,
+                Address1 = m.Person?.Address1,
+                AnnualSalary = m.AnnualSalary,
+                m.MaxExpenseAmount
+            }));
 
-            return Ok(employees);
+            return Ok(allEmployees);
         }
 
         [HttpPost]

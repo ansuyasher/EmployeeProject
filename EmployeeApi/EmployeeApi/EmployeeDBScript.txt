@@ -1,0 +1,32 @@
+CREATE TABLE Persons (
+    PersonID INT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Address1 VARCHAR(100)
+);
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY,
+    PersonID INT,
+    PayPerHour DECIMAL(10, 2),
+    FOREIGN KEY (PersonID) REFERENCES Persons(PersonID)
+);
+CREATE TABLE Supervisors (
+    SupervisorID INT PRIMARY KEY,
+    PersonID INT,
+    AnnualSalary DECIMAL(15, 2),
+    FOREIGN KEY (PersonID) REFERENCES Persons(PersonID)
+);
+CREATE TABLE Managers (
+    ManagerID INT PRIMARY KEY,
+    PersonID INT,
+    AnnualSalary DECIMAL(15, 2),
+    MaxExpenseAmount DECIMAL(15, 2),
+    FOREIGN KEY (PersonID) REFERENCES Persons(PersonID)
+);
+CREATE TABLE ManagerExpenses (
+    ExpenseID INT PRIMARY KEY,
+    ManagerID INT,
+    ExpenseAmount DECIMAL(15, 2),
+    ExpenseDate DATE,
+    FOREIGN KEY (ManagerID) REFERENCES Managers(ManagerID)
+);
